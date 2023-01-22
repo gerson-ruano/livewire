@@ -5,13 +5,16 @@
         </h2>
     </x-slot>
 
+    {{$search}}
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <div class="px-6 py-4">
+            
             <input wire:model="search" type="text">
-        </div>
+            <!--x-inputs.text wire:model="search"/-->
 
-        {{$search}}
+        </div>
 
 
         <table class="min-w-full leading-normal">

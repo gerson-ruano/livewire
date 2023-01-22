@@ -9,6 +9,7 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
+        {{--<script src="{{ asset('js/app.js') }}"></script>--}}
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -33,6 +34,7 @@
 
         @stack('modals')
 
+        {{--<script src="{{ asset('js/app.js') }}"></script>--}}
         @livewireScripts
     </body>
 </html>

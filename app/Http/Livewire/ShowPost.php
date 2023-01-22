@@ -8,17 +8,15 @@ use App\Models\Post;
 class ShowPost extends Component
 {
 
-    public $search;
-
-    public function mount()
-    {
-        $this->search = 'Hello World!';
-    }
+    public $search = 'h';
 
     public function render()
     {
-        $posts = Post::all();
+        $posts = Post::where('title', 'like', '%' . $this->search . '%')
+            ->where('title', 'like', '%' . $this->search . '%')->get();
 
         return view('livewire.show-post', compact('posts'));
     }
+
+    
 }
