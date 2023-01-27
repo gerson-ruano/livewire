@@ -5,34 +5,39 @@
         </h2>
     </x-slot>
 
-    {{$search}}
+    {{--$search--}}
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <div class="px-6 py-4">
-            
-            <input wire:model="search" type="text">
-            <!--x-inputs.text wire:model="search"/-->
+
+            {{--<input wire:model="search" type="text">
+            <!--x-inputs.text wire:model="search"/-->--}}
+            <x-jet-input class="w-full" placeholder="Escriba que quiere buscar" type=text wire:model="search"/>
+            {{--para utilizar los componentes de jetstrem se utiliza la ruta jet--}}
 
         </div>
-
+        @if($posts->count())
 
         <table class="min-w-full leading-normal">
             <thead>
                 <tr>
                     <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                        wire:click="order('id')">
                         ID
                     </th>
                     <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                        wire:click="order('title')">
                         Title
                     </th>
                     <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                        wire:click="order('content')">
                         Content
                     </th>
-                   
+
                 </tr>
             </thead>
             <tbody>
@@ -68,5 +73,11 @@
                 @endforeach
             </tbody>
         </table>
+        @else
+        <div class="px-6 py-4">
+            <h2>No existe ningun registro coincidente</h2>
+        </div>
+        @endif
+
     </div>
 </div>
