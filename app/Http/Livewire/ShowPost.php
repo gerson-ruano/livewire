@@ -15,7 +15,7 @@ class ShowPost extends Component
     public function render()
     {
         $posts = Post::where('title', 'like', '%' . $this->search . '%')
-            ->orwhere('title', 'like', '%' . $this->search . '%')
+            ->orwhere('content', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->get();
 
@@ -24,7 +24,7 @@ class ShowPost extends Component
 
     public function order($sort){
 
-        if ($this->$sort == $sort){
+        if ($this->sort == $sort){
 
             if ($this->direction == 'desc'){
                 $this->direction = 'asc';

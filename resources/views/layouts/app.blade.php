@@ -7,6 +7,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/fontawesome-free/css/all.css') }}">
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
