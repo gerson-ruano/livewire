@@ -11,6 +11,7 @@
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         {{--<script src="{{ asset('js/app.js') }}"></script>--}}
     </head>
@@ -39,5 +40,14 @@
 
         {{--<script src="{{ asset('js/app.js') }}"></script>--}}
         @livewireScripts
+        <script>
+            Livewire.on('alert', function(message){
+                Swal.fire(
+                    'Good job!',
+                    message,
+                    'success'
+                )
+            })
+        </script>
     </body>
 </html>
