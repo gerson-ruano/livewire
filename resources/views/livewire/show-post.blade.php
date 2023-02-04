@@ -17,7 +17,7 @@
             {{--para utilizar los componentes de jetstrem se utiliza la ruta jet--}}
             @livewire('create-post')
         </div>
-        
+
         @if($posts->count())
 
         <table class="min-w-full leading-normal">
@@ -105,7 +105,7 @@
             </tbody>
         </table>
         @else
-        <div class="px-6 py-4 justify-center">
+        <div class="px-6 py-4 flex justify-center items-center h-screen">
             <h2>No existe ningun registro coincidente</h2>
         </div>
         @endif
