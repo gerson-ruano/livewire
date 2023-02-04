@@ -15,10 +15,9 @@
             <!--x-inputs.text wire:model="search"/-->--}}
             <x-jet-input class="flex-1 mr-4" placeholder="Escriba que quiere buscar" type=text wire:model="search"/>
             {{--para utilizar los componentes de jetstrem se utiliza la ruta jet--}}
-
-
             @livewire('create-post')
         </div>
+        
         @if($posts->count())
 
         <table class="min-w-full leading-normal">
@@ -106,7 +105,7 @@
             </tbody>
         </table>
         @else
-        <div class="px-6 py-4">
+        <div class="px-6 py-4 justify-center">
             <h2>No existe ningun registro coincidente</h2>
         </div>
         @endif
