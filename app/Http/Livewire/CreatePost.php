@@ -9,11 +9,11 @@ use Livewire\WithFileUploads;
 class CreatePost extends Component
 {
     use WithFileUploads;
-    public $open = true;
+    public $open = false;
     public $title, $content, $image, $identificador;
 
     public function mount(){
-        $this->identificador + rand();
+        $this->identificador = rand();
     }
 
     protected $rules = [
@@ -30,7 +30,6 @@ class CreatePost extends Component
     public function save(){
 
         $this->validate();
-
         $image = $this->image->store('posts');
 
         Post::create([

@@ -71,34 +71,27 @@
 
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($posts as $post)
                 <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">
+                    <td class="px-5 py-5 ">
+                        <p class="text-gray-900 text-sm">
                             {{$post->id}}
                         </p>
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">
+                        <p class="text-gray-900 text-sm">
                             {{$post->title}}
                         </p>
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">
+                        <p class="text-gray-900 text-sm">
                             {{$post->content}}
                         </p>
                     </td>
-                    {{--<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">
-                            43
-                        </p>
-                    </td>--}}
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                            <span class="relative">Activo</span>
-                        </span>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        {{--<p class="text-gray-900 whitespace-no-wrap">--}}
+                        @livewire('edit-post', ['post' => $post], key($post->id))
                     </td>
                 </tr>
                 @endforeach
