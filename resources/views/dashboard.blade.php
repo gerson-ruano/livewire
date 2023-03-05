@@ -12,6 +12,4 @@
         @livewire('show-post')
 
     </div>
-    </div>
-
 </x-app-layout>
