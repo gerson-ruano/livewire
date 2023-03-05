@@ -19,15 +19,14 @@ class EditPost extends Component
         'post.content' => 'required',
     ];
 
-    public function mount(Post $post){
-        $this->post = $post;
-
+    public function mount(){
+        $this->post = new Post();
         $this->identificador = rand();
     }
 
     public function save(){
         $this->validate();
-        if($this->$image){
+        if($this->image){
             Storage::delete([$this->post->image]);
 
             $this->post->image = $this->image->store('posts');

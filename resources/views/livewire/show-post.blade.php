@@ -105,6 +105,14 @@
         </div>
         @endif
 
+        @if($posts->hasPages())
+
+        <div class="px-6 py-3">
+            {{$posts->links()}}
+        </div>
+
+        @endif
+
     </div>
 
     <x-jet-dialog-modal wire:model="open_edit">
@@ -122,7 +130,8 @@
             @if ($image)
                 <img class="mb-4" src="{{$image->temporaryUrl()}}">
             @else
-                <img class="mb-4" src="{{Storage::url($post->image)}}" alt="">
+                <img class="mb-4" src="{{Storage::url($item->image)}}" alt="">
+                {{--Storage::url($item->image)--}}
             @endif
 
             <div class="mb-4">
