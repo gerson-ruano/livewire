@@ -124,11 +124,10 @@
             </div>
 
             @if ($image)
-                <img class="mb-4" src="{{$image->temporaryUrl() }}">
+                <img class="mb-4" src="{{ $image->temporaryUrl() }}">
             @else
-                <img class="mb-5" src="{{ asset('storage/'.$post->image) }}" alt="">
+                <img class="mb-5" src="{{ asset('storage/' . $post->image) }}" alt="">
                 {{-- Storage::url($post->image --}}
-                
             @endif
 
             <div class="mb-4">
