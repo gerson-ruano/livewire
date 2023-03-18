@@ -13,10 +13,11 @@ class ShowPost extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public $search, $post, $image, $identificador;
+    public $search, $post, $image, $identificador, $title, $content;
     public $sort = 'id';
     public $direction = 'desc';
     public $open_edit = false;
+    public $creat_post = false;
 
     public function mount(){
         $this->identificador = rand();
@@ -30,6 +31,7 @@ class ShowPost extends Component
     protected $rules = [
         'post.title' => 'required',
         'post.content' => 'required',
+        'image' => 'image|max:2048',
     ];
 
     protected $listeners = ['render' => 'render'];
@@ -83,6 +85,31 @@ class ShowPost extends Component
         $this->identificador = rand();
 
         $this->emit('alert', 'El post se actualizó satisfactoriamente');
+    }
+
+    public function agregar_post(Post $post )
+    {
+        $this->post  = $post;
+        $this->creat_post = true;
+
+    }
+
+    public function save(){
+
+        $this->validate();
+        $image = $this->image->store('posts');
+
+        Post::create([
+            'title'=>$this->title,
+            'content'=>$this->content,
+            'image' => $image
+        ]);
+
+        $this->reset(['creat_post','title','content', 'image']);
+
+        $this->identificador = rand();
+        //$this->emitTo('show-post','render');
+        $this->emit('alert','El post se creo satisfactoriamente');
     }
 
 }
