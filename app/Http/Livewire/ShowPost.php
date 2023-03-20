@@ -13,11 +13,14 @@ class ShowPost extends Component
     use WithFileUploads;
     use WithPagination;
 
-    public $search, $post, $image, $identificador, $title, $content;
+    public $perPage = 5;
+    public $post;
+    public $identificador;
+    public $image;
+    public $search;
     public $sort = 'id';
     public $direction = 'desc';
     public $open_edit = false;
-    public $creat_post = false;
 
     public function mount(){
         $this->identificador = rand();
@@ -26,24 +29,29 @@ class ShowPost extends Component
 
     public function updatingSearch(){
         $this->resetPage();
+        
     }
 
     protected $rules = [
         'post.title' => 'required',
         'post.content' => 'required',
-        'image' => 'image|max:2048',
+        //'image' => 'image|max:2048',
     ];
 
-    protected $listeners = ['render' => 'render'];
+    protected $listeners = [
+        'render' , 'delete'
+    ];
+
 
     public function render()
     {
         $posts = Post::where('title', 'like', '%' . $this->search . '%')
             ->orwhere('content', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sort, $this->direction)
-            ->paginate(10);
+            ->orderBy($this->sort, $this->direction);
 
-        return view('livewire.show-post', compact('posts'));
+        $posts = $posts->paginate($this->perPage);
+
+        return view('livewire.show-post',['posts' => $posts]);
     }
 
     public function order($sort){
@@ -87,29 +95,18 @@ class ShowPost extends Component
         $this->emit('alert', 'El post se actualizó satisfactoriamente');
     }
 
-    public function agregar_post(Post $post )
+    public function delete(Post $post)
     {
-        $this->post  = $post;
-        $this->creat_post = true;
+        
+        if($this->image){
+          Storage::delete([$this->post->image]);
+          $post->delete();
+
+        }else{
+            $post->delete();
+        }
 
     }
 
-    public function save(){
-
-        $this->validate();
-        $image = $this->image->store('posts');
-
-        Post::create([
-            'title'=>$this->title,
-            'content'=>$this->content,
-            'image' => $image
-        ]);
-
-        $this->reset(['creat_post','title','content', 'image']);
-
-        $this->identificador = rand();
-        //$this->emitTo('show-post','render');
-        $this->emit('alert','El post se creo satisfactoriamente');
-    }
 
 }

@@ -9,8 +9,11 @@ use Livewire\WithFileUploads;
 class CreatePost extends Component
 {
     use WithFileUploads;
-    public $open = false;
-    public $title, $content, $image, $identificador;
+    public $agregar_post = false;
+    public $title; 
+    public $content; 
+    public $image; 
+    public $identificador;
 
     public function mount(){
         $this->identificador = rand();
@@ -38,7 +41,7 @@ class CreatePost extends Component
             'image' => $image
         ]);
 
-        $this->reset(['open','title','content', 'image']);
+        $this->reset(['agregar_post','title','content', 'image']);
 
         $this->identificador = rand();
         $this->emitTo('show-post','render');
@@ -49,4 +52,5 @@ class CreatePost extends Component
     {
         return view('livewire.create-post');
     }
+    
 }

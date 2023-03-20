@@ -6,6 +6,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Alpine Plugins -->
+        
+
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
         <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/fontawesome-free/css/all.css') }}">
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
@@ -13,9 +16,11 @@
         @livewireStyles
         
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         {{--<script src="{{ asset('js/app.js') }}"></script>--}}
+
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -42,6 +47,8 @@
 
         {{--<script src="{{ asset('js/app.js') }}"></script>--}}
         @livewireScripts
+        @stack('js')
+        
         <script>
             Livewire.on('alert', function(message){
                 Swal.fire(

@@ -1,10 +1,11 @@
 <div>
-    <x-jet-danger-button wire:click="$set('open', true)" wire:loading.attr="disabled" wire:target="$set('open', true)">
+    <x-jet-secondary-button class="bg-blue-400" wire:click="$set('agregar_post', true)" wire:loading.attr="disabled" wire:target="$set('agregar_post', true)">
         Crear un nuevo Post
-    </x-jet-danger-button>
+    </x-jet-secondary-button>
 
 
-    <x-jet-dialog-modal wire:model="open">
+    <x-jet-dialog-modal wire:model="agregar_post">
+        
         <x-slot name="title">
             Crear Nuevo Post
         </x-slot>
@@ -40,7 +41,7 @@
 
         <x-slot name="footer">
 
-            <x-jet-secondary-button wire:click="$set('open', false)">
+            <x-jet-secondary-button wire:click="$set('agregar_post', false)" class="mr-2">
                 Cancelar
             </x-jet-secondary-button>
 
@@ -51,4 +52,5 @@
         </x-slot>
 
     </x-jet-dialog-modal>
+
 </div>

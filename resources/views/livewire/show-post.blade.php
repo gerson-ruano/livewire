@@ -6,24 +6,29 @@
     </x-slot>
 
     {{-- $search --}}
-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <div class="px-6 py-4 flex items-center">
+            <select wire:model="perPage" class="border border-gray-300 rounded-lg w-20 mr-2">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
 
             {{-- <input wire:model="search" type="text">
             <!--x-inputs.text wire:model="search"/--> --}}
             <x-jet-input class="flex-1 mr-4" placeholder="Escriba que quiere buscar" type=text wire:model="search" />
             {{-- para utilizar los componentes de jetstrem se utiliza la ruta jet --}}
-            {{--@livewire('create-post')--}}
+            @livewire('create-post')
 
-            <button class=" btn btn-green" wire:click="agregar_post">
+
+            {{-- <button class=" btn btn-green" wire:click="create_post">
                 <i class="fa fa-plus"> Crear Post</i>
-            </button>
-
+            </button> --}}
         </div>
 
-        <x-jet-dialog-modal wire:model="creat_post">
+        {{-- <x-jet-dialog-modal wire:model="creat_post">
 
             <x-slot name="title">
                 Crear Nuevo Post
@@ -67,10 +72,9 @@
                 <x-jet-danger-button wire:click="save" wire:loading.attr="disabled" wire:target="save, image" class="disabled">
                     Crear Post
                 </x-jet-danger-button>
-                {{--<span> wire:loading wire:target="save"Cargando.....</span>--}}
             </x-slot>
     
-        </x-jet-dialog-modal>
+        </x-jet-dialog-modal> --}}
 
         @if ($posts->count())
 
@@ -119,7 +123,10 @@
                                 <i class="fas fa-sort float-right mt-1"></i>
                             @endif
                         </th>
-
+                        <th
+                            class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Editar
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -140,11 +147,16 @@
                                     {{ $item->content }}
                                 </p>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <td class="flex flex-item px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{-- <p class="text-gray-900 whitespace-no-wrap">
                         @livewire('edit-post', ['post' => $post], key($post->id)) --}}
                                 <a class="btn btn-green" wire:click="edit({{ $item }})">
                                     <i class="fas fa-edit"></i>
+                                </a>
+                                <a class="btn btn-red ml-2"
+                                    wire:click="$emit('deletePost', {{ $item->id }})">
+                                    <i class="fas fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -168,7 +180,6 @@
         <x-slot name='title'>
             Editar el post
         </x-slot>
-
         <x-slot name='content'>
             <div wire:loading wire:target="image"
                 class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -199,7 +210,7 @@
         </x-slot>
 
         <x-slot name='footer'>
-            <x-jet-secondary-button wire:click="$set('open_edit', false)">
+            <x-jet-secondary-button wire:click="$set('open_edit', false)" class="mr-2">
                 Cancelar
             </x-jet-secondary-button>
 
@@ -208,4 +219,35 @@
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>
+
+    @push('js')
+        <script src="sweetalert2.all.min.js"></script>
+
+        <script>
+            Livewire.on('deletePost', postId => {
+                Swal.fire({
+                    title: 'Desea eliminar el Usuario?',
+                    text: "Esta accion ya no podra revertirse!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Borrarlo!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.emitTo('show-post','delete', postId);
+
+                        Swal.fire(
+                            'Eliminado!',
+                            'Su archivo ha sido eliminado.',
+                            'success'
+                        )
+                    }
+                })
+
+            });
+        </script>
+    @endpush
+
 </div>
