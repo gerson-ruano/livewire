@@ -9,6 +9,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <div class="px-6 py-4 flex items-center">
+            <p class="mr-2">Mostrar</p>  
             <select wire:model="perPage" class="border border-gray-300 rounded-lg w-20 mr-2">
                 <option value="5">5</option>
                 <option value="10">10</option>
@@ -147,7 +148,7 @@
                                     {{ $item->content }}
                                 </p>
                             </td>
-                            <td class="flex flex-item px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td class="flex items-stretch px-5 py-5 bg-white text-sm">
                                 {{-- <p class="text-gray-900 whitespace-no-wrap">
                         @livewire('edit-post', ['post' => $post], key($post->id)) --}}
                                 <a class="btn btn-green" wire:click="edit({{ $item }})">
@@ -221,7 +222,7 @@
     </x-jet-dialog-modal>
 
     @push('js')
-        <script src="sweetalert2.all.min.js"></script>
+        {{--<script src="sweetalert2.all.min.js"></script>--}}
 
         <script>
             Livewire.on('deletePost', postId => {

@@ -17,6 +17,7 @@ class CreatePost extends Component
 
     public function mount(){
         $this->identificador = rand();
+        $this->agregar_post = '';
     }
 
     protected $rules = [

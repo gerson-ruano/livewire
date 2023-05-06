@@ -23,11 +23,13 @@ class ShowPost extends Component
     public $open_edit = false;
 
     public function mount(){
+        $this->open_edit = false;
         $this->identificador = rand();
         $this->post = new Post();
     }
 
     public function updatingSearch(){
+        $this->open_edit = false;
         $this->resetPage();
         
     }
