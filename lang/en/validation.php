@@ -161,6 +161,15 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'image' => [
+            'required' => 'No puedes dejar vacío el campo :attribute.',
+        ],
+        'title' => [
+            'required' => 'No puedes dejar vacío el campo :attribute.',
+        ],
+        'content' => [
+            'required' => 'No puedes dejar vacío el campo :attribute.',
+        ],
     ],
 
     /*
@@ -174,6 +183,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'image' => 'imagen',
+        'title' => 'titulo',
+        'content' => 'contenido'
+    ],
 
 ];

@@ -6,6 +6,7 @@ use App\Models\Post;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Cookie;
 
 
 class ShowPost extends Component
@@ -22,16 +23,18 @@ class ShowPost extends Component
     public $direction = 'desc';
     public $open_edit = false;
 
+
     public function mount(){
         $this->open_edit = false;
         $this->identificador = rand();
         $this->post = new Post();
+        $this->open_edit = Cookie::get('open_edit_modal', false);
     }
 
     public function updatingSearch(){
         $this->open_edit = false;
         $this->resetPage();
-        
+
     }
 
     protected $rules = [
@@ -77,7 +80,6 @@ class ShowPost extends Component
     {
         $this->post  = $post;
         $this->open_edit = true;
-
     }
 
     public function update(){
@@ -99,7 +101,7 @@ class ShowPost extends Component
 
     public function delete(Post $post)
     {
-        
+
         if($this->image){
           Storage::delete([$this->post->image]);
           $post->delete();

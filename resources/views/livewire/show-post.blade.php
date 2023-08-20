@@ -5,6 +5,53 @@
         </h2>
     </x-slot>
 
+    @if ($open_edit)
+    <x-jet-dialog-modal wire:model="open_edit">
+
+        <x-slot name='title'>
+            Editar el post
+        </x-slot>
+        <x-slot name='content'>
+            <div wire:loading wire:target="image"
+                class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Imagen Cargando..!</strong>
+                <span class="block sm:inline">Espere un momento hasta que se haya procesado.</span>
+            </div>
+
+            @if ($image)
+                <img class="mb-4" src="{{ $image->temporaryUrl() }}">
+            @else
+                <img class="mb-5" src="{{ asset('storage/' . $post->image) }}" alt="">
+                {{-- Storage::url($post->image --}}
+            @endif
+
+            <div class="mb-4">
+                <x-jet-label value="Titulo del post" />
+                <x-jet-input wire:model="post.title" type="text" class="w-full" />
+            </div>
+
+            <div>
+                <x-jet-label value="Contenido del post" />
+                <textarea wire:model="post.content"rows="6" class="form-control w-full"></textarea>
+            </div>
+            <div>
+                <input type="file"wire:model="image" id="{{ $identificador }}">
+                <x-jet-input-error for="image" />
+            </div>
+        </x-slot>
+
+        <x-slot name='footer'>
+            <x-jet-secondary-button wire:click="$set('open_edit', false)" class="mr-2">
+                Cancelar
+            </x-jet-secondary-button>
+
+            <x-jet-danger-button wire:click="update" wire:loading.attr="disabled" class="disabled">
+                Actualizar
+            </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+    @endif
+
     {{-- $search --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
@@ -28,54 +75,6 @@
                 <i class="fa fa-plus"> Crear Post</i>
             </button> --}}
         </div>
-
-        {{-- <x-jet-dialog-modal wire:model="creat_post">
-
-            <x-slot name="title">
-                Crear Nuevo Post
-            </x-slot>
-    
-            <x-slot name="content">
-    
-                <div wire:loading  wire:target="image" class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong class="font-bold">Imagen Cargando..!</strong>
-                    <span class="block sm:inline">Espere un momento hasta que se haya procesado.</span>
-                </div>
-    
-                @if ($image)
-                    <img class="mb-4" src="{{$image->temporaryUrl()}}">
-                @endif 
-    
-                <div class="mb-4">
-                    <x-jet-label value="titulo del post"/>
-                    <x-jet-input type="text" class="w-full" wire:model.defer="title"/>
-                    <x-jet-input-error for="title"/>
-    
-                </div>
-                <div class="mb-4">
-                    <x-jet-label value="contenido del post"/>
-                    <textarea wire:model.defer="content" class="form-control w-full" rows="6"></textarea>
-                    <x-jet-input-error for="content"/>
-                </div>
-                <div>
-                    <input type="file" wire:model="image" id="{{$identificador}}">
-                    <x-jet-input-error for="image"/>
-                </div>
-    
-            </x-slot>
-    
-            <x-slot name="footer">
-    
-                <x-jet-secondary-button wire:click="$set('creat_post', false)">
-                    Cancelar
-                </x-jet-secondary-button>
-    
-                <x-jet-danger-button wire:click="save" wire:loading.attr="disabled" wire:target="save, image" class="disabled">
-                    Crear Post
-                </x-jet-danger-button>
-            </x-slot>
-    
-        </x-jet-dialog-modal> --}}
 
         @if ($posts->count())
 
@@ -150,7 +149,7 @@
                             </td>
                             <td class="flex items-stretch px-5 py-5 bg-white text-sm">
                                 {{-- <p class="text-gray-900 whitespace-no-wrap">
-                        @livewire('edit-post', ['post' => $post], key($post->id)) --}}
+                                @livewire('edit-post', ['post' => $post], key($post->id)) --}}
                                 <a class="btn btn-green" wire:click="edit({{ $item }})">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -164,9 +163,11 @@
                 </tbody>
             </table>
         @else
-            <div class="px-6 py-4 flex justify-center items-center h-screen">
-                <h2>No existe ningun registro coincidente</h2>
+        <div class="flex justify-center items-center h-screen">
+            <div class="px-6 py-4 bg-red-100 border border-red-400 text-red-700 rounded-md shadow-md">
+                <h2 class="text-center">No existe ningún registro coincidente</h2>
             </div>
+        </div>
         @endif
 
         @if ($posts->hasPages())
@@ -175,51 +176,6 @@
             </div>
         @endif
     </div>
-
-    <x-jet-dialog-modal wire:model="open_edit">
-
-        <x-slot name='title'>
-            Editar el post
-        </x-slot>
-        <x-slot name='content'>
-            <div wire:loading wire:target="image"
-                class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                <strong class="font-bold">Imagen Cargando..!</strong>
-                <span class="block sm:inline">Espere un momento hasta que se haya procesado.</span>
-            </div>
-
-            @if ($image)
-                <img class="mb-4" src="{{ $image->temporaryUrl() }}">
-            @else
-                <img class="mb-5" src="{{ asset('storage/' . $post->image) }}" alt="">
-                {{-- Storage::url($post->image --}}
-            @endif
-
-            <div class="mb-4">
-                <x-jet-label value="Titulo del post" />
-                <x-jet-input wire:model="post.title" type="text" class="w-full" />
-            </div>
-
-            <div>
-                <x-jet-label value="Contenido del post" />
-                <textarea wire:model="post.content"rows="6" class="form-control w-full"></textarea>
-            </div>
-            <div>
-                <input type="file"wire:model="image" id="{{ $identificador }}">
-                <x-jet-input-error for="image" />
-            </div>
-        </x-slot>
-
-        <x-slot name='footer'>
-            <x-jet-secondary-button wire:click="$set('open_edit', false)" class="mr-2">
-                Cancelar
-            </x-jet-secondary-button>
-
-            <x-jet-danger-button wire:click="update" wire:loading.attr="disabled" class="disabled">
-                Actualizar
-            </x-jet-danger-button>
-        </x-slot>
-    </x-jet-dialog-modal>
 
     @push('js')
         {{--<script src="sweetalert2.all.min.js"></script>--}}

@@ -5,19 +5,31 @@ namespace App\Http\Livewire;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Cookie;
 
 class CreatePost extends Component
 {
     use WithFileUploads;
     public $agregar_post = false;
-    public $title; 
-    public $content; 
-    public $image; 
+    public $title;
+    public $content;
+    public $image;
     public $identificador;
+    //public $modalShown = false;
 
     public function mount(){
         $this->identificador = rand();
-        $this->agregar_post = '';
+
+        if (!Cookie::get('modal_shown')) {
+            $this->agregar_post = true;
+        }
+    }
+
+    public function openModal()
+    {
+        $this->agregar_post = true;
+        Cookie::queue('modal_shown', true, 60);
+        // Se configura una cookie con una duración de 60 minutos
     }
 
     protected $rules = [
@@ -30,6 +42,7 @@ class CreatePost extends Component
     public function updated($propertyName){
         $this->validateOnly($propertyName);
     }*/
+
 
     public function save(){
 
@@ -53,5 +66,5 @@ class CreatePost extends Component
     {
         return view('livewire.create-post');
     }
-    
+
 }
